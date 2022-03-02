@@ -64,7 +64,6 @@ int proc_join(pid_t id)
         perror('waitpid_pid');
         exit(EXIT_FAILURE);
     }
-    printf(' Fils:%d ', id);
     return EXIT_SUCCESS;
 }
 
