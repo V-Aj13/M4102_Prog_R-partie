@@ -49,17 +49,7 @@ void *sommeChunk(int i)
            getpid(), (long int)pthread_self(), syscall(SYS_gettid), i, prem, der - 1);
 
     A_COMPLETER;
-    int prem =  fork();
-    int der = fork();
-    
-    for (int j = 0;  j < prem; j++)
-    {
-        for (int k = 0; k < der; k++)
-        {
-            /* code */
-        }
-        
-    }
+
     
 
     return (NULL);

@@ -35,7 +35,6 @@
 
 pid_t proc_start(void *(*fn)(int), int id)
 {
-    A_COMPLETER;
     pid_t pid;
     pid = fork();
     if (pid == -1)
@@ -45,10 +44,11 @@ pid_t proc_start(void *(*fn)(int), int id)
     }
     if (pid == 0)
     {
-        *fn;
+        fn(id);
     }
     else
     {
+        waitpid(pid, NULL, 0);
         exit(0);
     }
 
@@ -58,8 +58,13 @@ pid_t proc_start(void *(*fn)(int), int id)
 /* attend la fin d'un processus */
 int proc_join(pid_t id)
 {
-    A_COMPLETER;
-    
+
+    if (waitpid(id, NULL, 0) != id)
+    {
+        perror('waitpid_pid');
+        exit(EXIT_FAILURE);
+    }
+    printf(' Fils:%d ', id);
     return EXIT_SUCCESS;
 }
 
