@@ -64,6 +64,7 @@ int proc_join(pid_t id)
         perror('waitpid_pid');
         exit(EXIT_FAILURE);
     }
+
     return EXIT_SUCCESS;
 }
 

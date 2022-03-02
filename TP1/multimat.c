@@ -50,6 +50,11 @@ void *sommeChunk(int i)
 
     A_COMPLETER;
 
+    for (int i = 0; i < A.dim1 || i < B.dim2; i++)
+    {
+        MA
+    }
+    
     
 
     return (NULL);
