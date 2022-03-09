@@ -34,11 +34,29 @@ extern matrice_t A, B, C, D;
 void *sommeChunk(int i)
 {
     int prem, der;
-
+    int h;
     if (A.dim1 != B.dim1 || A.dim2 != B.dim2)
     { /* vérif pour addition */
         fprintf(stderr, "Erreur dimmmensions  pour tache %d !", i);
         return (NULL);
+    }
+    h = A.dim1 / nbTaches;
+    prem = h * i;
+    if (i == nbTaches - 1)
+    {
+        der = A.dim1 - 1;
+    }
+    else
+    {
+        der = (i + 1) * h - 1;
+    }
+
+    for (int k = prem; k <= der; k++)
+    {
+        for (int j = 0; j < A.dim1; j++)
+        {
+            MAT(C, k, j) = MAT(A, k, j) + MAT(B, k, j);
+        }
     }
 
     /*ici calcul du numéro de la première ligne : prem, et der pour le numéro
@@ -47,16 +65,7 @@ void *sommeChunk(int i)
     /* affichage d'infos système */
     printf("PID:%d, threadSelf:%ld, tid:%ld, i:%d, exécute lignes de %d à %d\n",
            getpid(), (long int)pthread_self(), syscall(SYS_gettid), i, prem, der - 1);
-
-    A_COMPLETER;
-
-    for (int i = 0; i < A.dim1 || i < B.dim2; i++)
-    {
-        MA
-    }
-    
-    
-
+    afficheMatrice(C);
     return (NULL);
 }
 
@@ -73,6 +82,28 @@ void *produitChunk(int i)
 
     /*ici calcul du numéro de la première ligne : prem, et der pour le numéro
      * de la dernière ligne en fonction de i */
+    int l = A.dim1 / nbTaches;
+    prem = l * i;
+    if (i == nbTaches - 1)
+    {
+        der = A.dim1 - 1;
+    }
+    else
+    {
+        der = (i + 1) * l - 1;
+    }
+
+    for (int k = prem; k <= der; k++)
+    {
+        for (int j = 0; j < A.dim1; j++)
+        {
+            MAT(C, k, j) = 0;
+            for (int g = 0; g < der; g++)
+            {
+                MAT(C, k, j) = MAT(A, k, g) * MAT(B, g, j) + MAT(C, i, j);
+            }
+        }
+    }
 
     /* affichage d'infos système */
     printf("PID:%d, threadSelf:%ld, tid:%ld, i:%d, exécute lignes de %d à %d\n",

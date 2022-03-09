@@ -58,14 +58,13 @@ pid_t proc_start(void *(*fn)(int), int id)
 /* attend la fin d'un processus */
 int proc_join(pid_t id)
 {
-
     if (waitpid(id, NULL, 0) != id)
     {
         perror('waitpid_pid');
         exit(EXIT_FAILURE);
-    }
 
-    return EXIT_SUCCESS;
+        return EXIT_SUCCESS;
+    }
 }
 
 /*--------------------------- multithreads -------------------------------*/
@@ -77,7 +76,6 @@ pthread_t
 thread_start(void *(*fn)(int), int id)
 {
     pthread_t thread_id;
-    int rc;
 
     A_COMPLETER;
     /* intptr_t est là pour éviter un warning de conversion de type
